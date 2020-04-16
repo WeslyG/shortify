@@ -18,12 +18,14 @@ RUN npm run build
 FROM node:12-alpine
 ENV NODE_ENV production
 ARG LICENSE_KEY
+
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
+
 COPY --from=build /usr/app/build/bundle.prod.js /usr/app
-COPY --from=build /usr/app/package.json /usr/app
-RUN yarn add geoip-lite
-RUN cd node_modules/geoip-lite && \
+RUN yarn init -y && \
+    yarn add geoip-lite && \
+    cd node_modules/geoip-lite && \
     npm run-script updatedb license_key=${LICENSE_KEY} > /dev/null
 
 EXPOSE 3000
