@@ -2,10 +2,15 @@ import { hash } from '../../utils/hash';
 import { LinkModel } from '../../models/linkModel';
 
 const checkNameFree = async name => {
-  const res = await LinkModel.find({
-    hash: name
-  });
-  return res.length === 0 ? true : false;
+  if (name === 'stats') return false;
+  if ((name.match(/^\w+$/))) {
+    const res = await LinkModel.find({
+      hash: name
+    });
+    return res.length === 0 ? true : false;
+  } else {
+    return false;
+  }
 };
 
 const saveLink = async (link, name) => {

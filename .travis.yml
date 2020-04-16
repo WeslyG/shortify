@@ -1,0 +1,20 @@
+sudo: required
+services:
+ - docker
+language: node_js
+node_js:
+  - "12"
+before_install:
+  - app_version=$(node -e "console.log(require('./package.json').version);")
+  - app_name=$(node -e "console.log(require('./package.json').name);")
+install:
+  - yarn
+  - npm run build
+  # test here
+script:
+  - docker build --build-arg LICENSE_KEY=${LICENSE_KEY} -t ${DOCKER_USERNAME}/${app_name}:${app_version} .
+  - docker tag ${DOCKER_USERNAME}/${app_name}:${app_version} ${DOCKER_USERNAME}/${app_name}:latest
+  - docker images
+  - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+  - docker push ${DOCKER_USERNAME}/${app_name}:${app_version}
+  - docker push ${DOCKER_USERNAME}/${app_name}:latest

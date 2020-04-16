@@ -6,6 +6,8 @@ import { connectMongo } from './src/utils/dbConnect';
 import { createLink } from './src/controllers/link/createLink';
 import { getLink } from './src/controllers/link/getLink';
 import { getStats } from './src/controllers/link/getStats.js';
+import {version, name } from './package.json';
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -19,13 +21,13 @@ if (process.env.NODE_ENV === 'develop') {
 app.get('/', (req, res) => {
   res.send({
     message: 'ok',
-    version: process.env.npm_package_version,
-    name: process.env.npm_package_name
+    version: version,
+    name: name
   });
 });
 
 app.post('/link', createLink);
-app.post('/stats', getStats);
+app.get('/stats', getStats);
 app.get('/*', getLink);
 
 app.use((err, req, res, next) => {

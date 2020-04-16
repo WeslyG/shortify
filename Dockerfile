@@ -1,6 +1,5 @@
 # build contaiter
 FROM node:12-alpine AS build
-
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
 
@@ -17,14 +16,15 @@ RUN npm run build
 
 # run contaier
 FROM node:12-alpine
-ARG LICENSE_KEY
 ENV NODE_ENV production
+ARG LICENSE_KEY
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
-
 COPY --from=build /usr/app/build/bundle.prod.js /usr/app
-RUN yarn init -y && yarn add geoip-lite
+COPY --from=build /usr/app/package.json /usr/app
+RUN yarn add geoip-lite
 RUN cd node_modules/geoip-lite && \
     npm run-script updatedb license_key=${LICENSE_KEY} > /dev/null
+
 EXPOSE 3000
 CMD [ "node", "bundle.prod.js"]
