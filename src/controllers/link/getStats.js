@@ -4,11 +4,7 @@ import { HOSTNAME } from '../../../config';
 
 export const getStats = async (req, res) => {
   try {
-    if (!req.body.link) {
-      res.status(400).send({
-        'message': 'link is required in body'
-      });
-    } else {
+    if (req.body.link) {
       if (req.body.link.startsWith(HOSTNAME)) {
         const link = await LinkModel.find({
           hash: req.body.link.split('/')[3]
@@ -29,6 +25,10 @@ export const getStats = async (req, res) => {
           'message': 'link is not valid hostname'
         });
       }
+    } else {
+      res.status(400).send({
+        'message': 'link is required in body'
+      });
     }
   } catch(err) {
     res.status(500).send({

@@ -11,13 +11,50 @@ const viewLinkSchema = new Schema({
     unique: true,
     type: Date
   },
-  userAgent: {
-    required: true,
-    type: String
+  user: {
+    ipHash: {
+      required: true,
+      type: String
+    },
+    country: {
+      required: true,
+      type: String
+    },
+    city: {
+      required: true,
+      type: String
+    }
   },
-  ipAdd: {
-    required: true,
-    type: String
+  agent: {
+    browser: {
+      name: {
+        type: String,
+      },
+      version: {
+        type: String,
+      }
+    },
+    os: {
+      name: {
+        type: String
+      },
+      version: {
+        type: String
+      },
+      versionName: {
+        type: String
+      }
+    },
+    platform: {
+      type: {
+        type: String
+      }
+    },
+    engine: {
+      name: {
+        type: String
+      }
+    }
   }
 });
 

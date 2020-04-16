@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { PORT } from './config';
 import { corsDisable } from './src/utils/cors';
 import { connectMongo } from './src/utils/dbConnect';
 import { createLink } from './src/controllers/link/createLink';
@@ -18,18 +19,14 @@ if (process.env.NODE_ENV === 'develop') {
 app.get('/', (req, res) => {
   res.send({
     message: 'ok',
-    version: process.env.npm_package_version
+    version: process.env.npm_package_version,
+    name: process.env.npm_package_name
   });
 });
 
 app.post('/link', createLink);
 app.post('/stats', getStats);
-app.get('/\\w{5,9}', getLink);
-app.get('/*', (req, res) => {
-  res.status(404).send({
-    message: 'not found'
-  });
-});
+app.get('/*', getLink);
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500).send({
@@ -38,8 +35,8 @@ app.use((err, req, res, next) => {
 });
 
 // start
-app.listen(process.env.PORT || 3000, () => {
-  console.log('i am started for port = 3000');
+app.listen(PORT, () => {
+  console.log(`Started for port = ${PORT}`);
 });
 
 export default app;

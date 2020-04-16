@@ -14,30 +14,36 @@ module.exports = {
   entry: ['./app.js'],
   target: 'node',
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            [
-              '@babel/preset-env',
-              {
-                targets: {
-                  'node': 'current'
+    rules: [
+      {
+        test: /\.dat$/,
+        use: [
+          'file-loader',
+        ],
+      }, {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    'node': 'current'
+                  },
+                  useBuiltIns: 'usage',
+                  corejs: {
+                    version: 3,
+                    proposals: true
+                  }
                 },
-                useBuiltIns: 'usage',
-                corejs: {
-                  version: 3,
-                  proposals: true
-                }
-              },
-            ]
-          ],
+              ]
+            ],
+          }
         }
-      }
-    }]
+      }]
   },
   plugins: [
     new NodemonPlugin({
