@@ -23,6 +23,10 @@ const viewLinkSchema = new Schema({
     city: {
       required: true,
       type: String
+    },
+    timezone: {
+      required: true,
+      type: String
     }
   },
   agent: {

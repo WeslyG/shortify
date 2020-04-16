@@ -13,37 +13,34 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: ['./app.js'],
   target: 'node',
+  node: {
+    __dirname: true
+  },
   module: {
-    rules: [
-      {
-        test: /\.dat$/,
-        use: [
-          'file-loader',
-        ],
-      }, {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                '@babel/preset-env',
-                {
-                  targets: {
-                    'node': 'current'
-                  },
-                  useBuiltIns: 'usage',
-                  corejs: {
-                    version: 3,
-                    proposals: true
-                  }
+    rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                targets: {
+                  'node': 'current'
                 },
-              ]
-            ],
-          }
+                useBuiltIns: 'usage',
+                corejs: {
+                  version: 3,
+                  proposals: true
+                }
+              },
+            ]
+          ],
         }
-      }]
+      }
+    }]
   },
   plugins: [
     new NodemonPlugin({

@@ -15,16 +15,17 @@ export const getLink = async (req, res) => {
       });
       return;
     } else {
-      const ipData = geoip.lookup(req.ip);
+      const ipData = geoip.lookup(req.host);
       const browser = Bowser.parse(req.headers['user-agent']);
       await new ViewLinkModel({
         linkId: link[0].id,
         timestamp: new Date(),
         agent: browser,
         user: {
-          ipHash: hash(req.ip),
-          country: 'ipData.country',
-          city: 'ipData.city'
+          ipHash: hash(req.host),
+          country: ipData.country,
+          city: ipData.city,
+          timezone: ipData.timezone
         }
       }).save();
       res.redirect(link[0].originalLink);

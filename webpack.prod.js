@@ -5,6 +5,9 @@ module.exports = {
   stats: 'errors-only',
   entry: ['./app.js'],
   target: 'node',
+  node: {
+    __dirname: true
+  },
   module: {
     rules: [{
       test: /\.js$/,
