@@ -27,8 +27,12 @@ export const connectMongo = async () => {
       // connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
       // socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
     });
-    console.log('MongoDB connected...');
+    console.log(`MongoDB connected to ${connect}`);
   } catch (err) {
     console.log(err);
   }
 };
+
+// export const disconnectMongo = async () => {
+//   try
+// }

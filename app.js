@@ -8,7 +8,6 @@ import { getLink } from './src/controllers/link/getLink';
 import { getStats } from './src/controllers/link/getStats.js';
 import {version, name } from './package.json';
 
-
 const app = express();
 app.use(bodyParser.json());
 

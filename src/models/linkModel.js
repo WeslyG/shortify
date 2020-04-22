@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+const ObjectId = Schema.Types.ObjectId;
 
 const linkSchema = new Schema({
   originalLink: {
@@ -9,6 +10,10 @@ const linkSchema = new Schema({
     required: true,
     unique: true,
     type: String
+  },
+  owner: {
+    required: false,
+    type: ObjectId
   }
 });
 

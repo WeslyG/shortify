@@ -1,6 +1,6 @@
 import { LinkModel } from '../../models/linkModel';
 import { ViewLinkModel } from '../../models/viewLinkModel';
-import { hash } from '../../utils/hash';
+import { hashString } from '../../utils/hash';
 import Bowser from 'bowser';
 import geoip from 'geoip-lite';
 
@@ -20,9 +20,10 @@ export const getLink = async (req, res) => {
       await new ViewLinkModel({
         linkId: link[0].id,
         timestamp: new Date(),
+        userHash: hashString(`${req.headers['user-agent']}:${req.host}`),
         agent: browser,
         user: {
-          ipHash: hash(req.host),
+          ipHash: hashString(req.host),
           country: ipData.country,
           city: ipData.city,
           timezone: ipData.timezone

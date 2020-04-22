@@ -9,8 +9,8 @@ before_install:
   - app_name=$(node -e "console.log(require('./package.json').name);")
 install:
   - yarn
-  - npm run build
-  # test here
+  - yarn build
+  - yarn test
 script:
   - docker build --build-arg LICENSE_KEY=${LICENSE_KEY} -t ${DOCKER_USERNAME}/${app_name}:${app_version} .
   - docker tag ${DOCKER_USERNAME}/${app_name}:${app_version} ${DOCKER_USERNAME}/${app_name}:latest

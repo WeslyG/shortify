@@ -11,6 +11,10 @@ const viewLinkSchema = new Schema({
     unique: true,
     type: Date
   },
+  userHash: {
+    required: true,
+    type: String
+  },
   user: {
     ipHash: {
       required: true,

@@ -1,5 +1,7 @@
 import { hash } from '../../utils/hash';
 import { LinkModel } from '../../models/linkModel';
+import { sendError } from '../../utils/sendError';
+import { alreadyExistError } from '../../models/errorModel';
 
 const checkNameFree = async name => {
   if (name === 'stats') return false;
@@ -31,9 +33,7 @@ export const createLink = async (req, res) => {
             res.status(201).send(link);
             return;
           } else {
-            res.status(400).send({
-              'message': 'name already exist'
-            });
+            sendError(res, alreadyExistError);
           }
         } else {
           const link = await saveLink(req.body.link);
