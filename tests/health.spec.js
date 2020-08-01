@@ -7,13 +7,7 @@ import {version, name } from '../package.json';
 const should = chai.should();
 chai.use(chaiHttp);
 
-const data = {
-  link: 'https://gist.github.com/',
-  name: 'testName',
-  bannedName: 'stats'
-};
-
-describe('Healthcheck', () => {
+describe('[API] Healthcheck', () => {
   afterEach(() => mongoUnit.drop());
 
   it('Create healthcheck', done => {

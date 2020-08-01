@@ -14,7 +14,7 @@ const data = {
   bannedName: 'stats'
 };
 
-describe('Link', () => {
+describe('[API] Link', () => {
   beforeEach(() => mongoUnit.initDb(process.env.MONGOURL, testData));
   afterEach(() => mongoUnit.drop());
 
