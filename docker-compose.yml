@@ -2,11 +2,12 @@ version: '3'
 
 services:
   backend:
-    image: weslyg/shortify:latest
-    ports:
-      - 3000:3000
-    depends_on:
-      - mongo
+    # image: weslyg/shortify:latest
+    # build: .
+    # ports:
+    #   - 3000:3000
+    # depends_on:
+    #   - mongo
     environment:
       - PORT=3000
       - HOSTNAME=localhost:3000
