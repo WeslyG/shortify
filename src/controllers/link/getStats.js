@@ -1,33 +1,26 @@
 import { LinkModel } from '../../models/linkModel';
 import { ViewLinkModel } from '../../models/viewLinkModel';
-import { HOSTNAME } from '../../../config';
 
 export const getStats = async (req, res) => {
   try {
-    if (req.body.link) {
-      if (req.body.link.startsWith(HOSTNAME)) {
-        const link = await LinkModel.find({
-          hash: req.body.link.split('/')[3]
+    if (req.params.link) {
+      const link = await LinkModel.find({
+        hash: req.params.link
+      });
+      if (link.length === 0) {
+        res.status(404).send({
+          'message': 'link not found'
         });
-        if (link.length === 0) {
-          res.status(404).send({
-            'message': 'link not found'
-          });
-          return;
-        } else {
-          const stats = await ViewLinkModel.find({
-            linkId: link[0].id
-          });
-          res.status(200).send(stats);
-        }
+        return;
       } else {
-        res.status(400).send({
-          'message': 'link is not valid hostname'
+        const stats = await ViewLinkModel.find({
+          linkId: link[0].id
         });
+        res.status(200).send(stats);
       }
     } else {
       res.status(400).send({
-        'message': 'link is required in body'
+        'message': 'link is required in query params'
       });
     }
   } catch(err) {
