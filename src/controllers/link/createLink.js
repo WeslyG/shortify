@@ -1,9 +1,10 @@
 import { hash } from '../../utils/hash';
 import { LinkModel } from '../../models/linkModel';
 import { sendError } from '../../utils/sendError';
+import { HOSTNAME } from '../../../config';
 import { alreadyExistError } from '../../models/errorModel';
 
-const checkNameFree = async name => {
+export const checkNameFree = async name => {
   if (name === 'stats') return false;
   if ((name.match(/^\w+$/))) {
     const res = await LinkModel.find({
@@ -18,7 +19,7 @@ const checkNameFree = async name => {
 const saveLink = async (link, name) => {
   return await new LinkModel({
     originalLink: link,
-    hash: name || hash(`${link}:${new Date().getTime()}`)
+    hash: name || hash(`${link}:${new Date().getTime()}`),
   }).save();
 };
 
@@ -30,14 +31,22 @@ export const createLink = async (req, res) => {
           const nameFree = await checkNameFree(req.body.name);
           if (nameFree) {
             const link = await saveLink(req.body.link, req.body.name);
-            res.status(201).send(link);
+            res.status(201).send({
+              originalLink: link.originalLink,
+              hash: link.hash,
+              shortLink: `${HOSTNAME}/${link.hash}`
+            });
             return;
           } else {
             sendError(res, alreadyExistError);
           }
         } else {
           const link = await saveLink(req.body.link);
-          res.status(201).send(link);
+          res.status(201).send({
+            originalLink: link.originalLink,
+            hash: link.hash,
+            shortLink: `${HOSTNAME}/${link.hash}`
+          });
           return;
         }
       } else {
