@@ -12,7 +12,8 @@ const app = express();
 app.use(bodyParser.json());
 
 connectMongo();
-if (process.env.NODE_ENV === 'develop') {
+if (process.env.NODE_ENV === 'development') {
+  console.log('Run in DEVELOPMENT mode');
   corsDisable(app);
 }
 
@@ -25,8 +26,8 @@ app.get('/', (req, res) => {
   });
 });
 
-app.post('/link', createLink);
-app.get('/stats', getStats);
+app.post('/links', createLink);
+app.get('/stats/:link', getStats);
 app.get('/*', getLink);
 
 app.use((err, req, res, next) => {
