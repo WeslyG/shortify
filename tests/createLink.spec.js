@@ -3,7 +3,7 @@ import app from '../app';
 import chaiHttp from 'chai-http';
 import mongoUnit from 'mongo-unit';
 import testData from './data.json';
-import { alreadyExistError } from '../src/models/errorModel';
+import { alreadyExistError } from '../src/dict/errorModel';
 
 const should = chai.should();
 chai.use(chaiHttp);
@@ -62,7 +62,25 @@ describe('[API] Link', () => {
       .set('Content-Type', 'application/json')
       .send({
         link: data.link,
-        name: testData.hash
+        name: testData.linkmodels[0].hash
+      })
+      .end((err, res) => {
+        should.exist(res.body);
+        res.should.have.status(alreadyExistError.status);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('message').equal(alreadyExistError.message);
+        done();
+      });
+  });
+
+  it('Create system "stats" name', done => {
+    chai.request(app)
+      .post('/links')
+      .set('Content-Type', 'application/json')
+      .send({
+        link: data.link,
+        name: 'stats'
       })
       .end((err, res) => {
         should.exist(res.body);

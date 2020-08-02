@@ -18,28 +18,10 @@ describe('[FUNC] checkNameFree', () => {
     res.should.equal(true);
   });
 
-  it.skip('Number name check', async () => {
-    const res = await checkNameFree(12352);
+  it('Exist name check', async () => {
+    const res = await checkNameFree(testData.linkmodels[0].hash);
     res.should.be.a('boolean');
     res.should.equal(false);
   });
-
-  // it('Boolean name check', async () => {
-  //   const res = await checkNameFree(true);
-  //   res.should.be.a('boolean');
-  //   res.should.equal(false);
-  // });
-
-  // it('Null name check', async () => {
-  //   const res = await checkNameFree(null);
-  //   res.should.be.a('boolean');
-  //   res.should.equal(false);
-  // });
-
-  // it('Exist name check', async () => {
-  //   const res = await checkNameFree(testData.linkmodels[0].hash);
-  //   res.should.be.a('boolean');
-  //   res.should.equal(false);
-  // });
 
 });
