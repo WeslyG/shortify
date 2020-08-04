@@ -7,8 +7,8 @@
     "build": "webpack --config webpack.prod.js",
     "start": "webpack --config webpack.dev.js",
     "lint": "eslint app.js src/",
-    "updep": "rm -rf package-lock.json yarn.lock && yarn && yarn upgrade && npm i",
-    "test": "PORT=3333 MONGO_URL='localhost:27111' mocha --exit --timeout 10000 --require @babel/register --delay ./**/*.spec.js",
+    "updep": "rm -rf package-lock.json yarn.lock npm-shrinkwrap.json && yarn && yarn upgrade && npm i",
+    "test": "NODE_ENV=test PORT=3333 MONGO_URL='localhost:27122' mocha --require dotenv/config --exit --timeout 10000 --require @babel/register --delay ./**/*.spec.js",
     "dockerBuild": "docker build -t $npm_package_dockerLogin/$npm_package_name:$npm_package_version .",
     "dockerPush": "docker push $npm_package_dockerLogin/$npm_package_name:$npm_package_version"
   },
@@ -36,6 +36,7 @@
     "body-parser": "^1.19.0",
     "bowser": "^2.10.0",
     "crc": "^3.8.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "geoip-lite": "^1.4.2",
     "mongoose": "^5.9.27",

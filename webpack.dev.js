@@ -13,9 +13,6 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: ['./app.js'],
   target: 'node',
-  node: {
-    __dirname: true
-  },
   module: {
     rules: [{
       test: /\.js$/,
