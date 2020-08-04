@@ -8,12 +8,12 @@ import { getLink } from './src/controllers/link/getLink';
 import { getStats } from './src/controllers/link/getStats.js';
 import {version, name } from './package.json';
 
+const NODE_ENV = process.env.NODE_ENV;
 const app = express();
 app.use(bodyParser.json());
 
 connectMongo();
-if (process.env.NODE_ENV === 'development') {
-  console.log('Run in DEVELOPMENT mode');
+if (NODE_ENV === 'development') {
   corsDisable(app);
 }
 
@@ -38,7 +38,7 @@ app.use((err, req, res, next) => {
 
 // start
 app.listen(PORT, () => {
-  console.log(`Started for port = ${PORT}`);
+  console.log(`App started in ${NODE_ENV} mode on port ${PORT}`);
 });
 
 export default app;
